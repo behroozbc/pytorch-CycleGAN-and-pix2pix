@@ -78,10 +78,18 @@ class Pix2PixModel(BaseModel):
 
         The option 'direction' can be used to swap images in domain A and domain B.
         """
-        AtoB = self.opt.direction == 'AtoB'
-        self.real_A = input['A' if AtoB else 'B'].to(self.device)
-        self.real_B = input['B' if AtoB else 'A'].to(self.device)
-        self.image_paths = input['A_paths' if AtoB else 'B_paths']
+        if self.opt.input_number==2:
+            AtoB = self.opt.direction == 'AtoB'
+            self.real_A = input['A' if AtoB else 'B'].to(self.device)
+            self.real_B = input['B' if AtoB else 'A'].to(self.device)
+            self.image_paths = input['A_paths' if AtoB else 'B_paths']
+        else:
+            self.real_B =input['cp'].to(self.device)
+            weatherLabel=input['weather'].to(self.device)
+            camera=input['camera'].to(self.device)
+            
+            self.real_A=torch.cat((camera,weatherLabel),1)
+            
 
     def forward(self):
         """Run forward pass; called by both functions <optimize_parameters> and <test>."""
