@@ -1,6 +1,7 @@
 from data.base_dataset import BaseDataset, get_transform
 from data.image_folder import make_dataset
 from PIL import Image
+import os
 import random
 class WeatherDataset(BaseDataset):
     def __init__(self,opt):
@@ -14,7 +15,7 @@ class WeatherDataset(BaseDataset):
         self.camera_size = len(self.camera_paths)  # get the size of dataset camera
         self.cp_size = len(self.cp_paths)  # get the size of dataset cp
         self.weather_size = len(self.cp_paths)  # get the size of dataset cp
-        self.weather_paths = len(self.weather_paths)  # get the size of dataset weather
+        self.weather_size = len(self.weather_paths)  # get the size of dataset weather
         self.camera_transport=get_transform(opt)
         self.weather_trasport=get_transform(opt,grayscale=True)
         self.cp_transport=get_transform(opt,grayscale=True)
